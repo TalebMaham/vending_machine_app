@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Machine de Distribution</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function fetchItems() {
+                $.ajax({
+                    url: "/api/items",
+                    method: "GET",
+                    success: function(data) {
+                        var itemsList = $('#items-list');
+                        itemsList.empty();
+                        data.forEach(function(item) {
+                            itemsList.append('<li>' + item.name + ' - ' + item.price + '€</li>');
+                        });
+                    },
+                    error: function(error) {
+                        console.log("Error fetching items:", error);
+                    }
+                });
+            }
+
+            // Fetch items on page load
+            fetchItems();
+
+            // Fetch items every 30 seconds
+            setInterval(fetchItems, 2000);
+        });
+    </script>
+</head>
+<body>
+    <h1>Articles Disponibles</h1>
+    <ul id="items-list">
+        <!-- Les articles seront chargés ici -->
+    </ul>
+</body>
+</html>
